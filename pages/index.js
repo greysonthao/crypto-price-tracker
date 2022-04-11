@@ -33,8 +33,9 @@ export default function Home(props) {
             fontWeight="bold"
             textAlign="center"
             color="white"
+            marginBottom={2}
           >
-            Top Cryptocurrency Prices By Market Cap
+            Cryptocurrency Prices By Market Cap
           </Typography>
           <DataTable data={data} />
         </Box>

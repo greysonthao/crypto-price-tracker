@@ -87,7 +87,7 @@ export default function SearchAppBar() {
             />
           </Search>
         </Toolbar>
-        <Toolbar variant="dense">
+        {/*  <Toolbar variant="dense">
           <Select
             variant="outlined"
             defaultValue="USD"
@@ -103,7 +103,7 @@ export default function SearchAppBar() {
             <MenuItem value="THB">ETH</MenuItem>
           </Select>
           <AccountCircle />
-        </Toolbar>
+        </Toolbar> */}
       </AppBar>
     </Box>
   );

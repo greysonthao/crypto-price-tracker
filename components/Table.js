@@ -62,7 +62,7 @@ export default function CustomizedTables(props) {
               <Image src={coin.image} alt={coin.name} width={20} height={20} />
               <Typography
                 variant="body1"
-                component="body1"
+                component="p"
                 sx={{
                   marginLeft: 1,
                   fontSize: "0.87rem",

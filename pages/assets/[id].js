@@ -26,7 +26,7 @@ export default function Details() {
   }, []);
 
   if (!coinData) {
-    return null;
+    return <div>Loading...</div>;
   }
 
   const formatDollar = (number, maximumSignificantDigits) =>
@@ -94,3 +94,15 @@ export default function Details() {
     </div>
   );
 }
+
+/* export async function getServerSideProps(context) {
+  const params = {
+    order: CoinGecko.ORDER.MARKET_CAP_DESC,
+  };
+  const result = await coinGeckClient.coins.markets(params);
+  return {
+    props: {
+      result,
+    },
+  };
+} */

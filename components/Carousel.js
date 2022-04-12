@@ -28,7 +28,7 @@ export default function Carousel() {
 
     const data = await res.json();
 
-    setBtcPrice(data.rates.usd);
+    setBtcPrice(data.rates.usd.value);
   };
 
   React.useEffect(() => {
@@ -40,9 +40,13 @@ export default function Carousel() {
     //when I add the select in the menu, add a condition here
     //to check what fiat currency is being used to display the numbers correctly
 
-    let assetUsdPrice = assetBtcPrice * btcPrice.value;
+    let assetUsdPrice = assetBtcPrice * btcPrice;
 
-    return "$" + assetUsdPrice.toFixed(2);
+    if (assetUsdPrice < 0.01) {
+      return "$" + assetUsdPrice.toFixed(7);
+    } else {
+      return "$" + assetUsdPrice.toFixed(2);
+    }
   };
 
   const items = trending.map((coin) => {
@@ -51,27 +55,34 @@ export default function Carousel() {
     return (
       <Link href={`/assets/${coin.item.id}`} key={coin.item.id}>
         <a>
-          <Box display="flex">
-            <img
-              src={coin.item.small}
-              width="50"
-              height="50"
-              alt={coin.item.name}
-            />
-            <Box display="flex" flexDirection="column">
-              <Typography
-                variant="body2"
-                color="white"
-                marginLeft={0.75}
-                marginTop={0.5}
-                marginBottom={1}
-              >
-                {coinConvertor(coin.item.price_btc)}
-              </Typography>
-              <Typography variant="h6" color="white" marginLeft={0.75}>
-                {coin.item.name}
-              </Typography>
+          <Box display="flex" flexDirection="column" alignItems="center">
+            <Box display="flex">
+              <img
+                src={coin.item.small}
+                width="50"
+                height="50"
+                alt={coin.item.name}
+              />
+              <Box display="flex" flexDirection="column">
+                <Typography
+                  variant="body2"
+                  color="white"
+                  marginLeft={0.75}
+                  marginTop="auto"
+                >
+                  {coin.item.symbol}
+                </Typography>
+              </Box>
             </Box>
+            <Typography
+              variant="h4"
+              color="white"
+              marginLeft={0.75}
+              marginTop={0.5}
+              marginBottom={1}
+            >
+              {coinConvertor(coin.item.price_btc)}
+            </Typography>
           </Box>
         </a>
       </Link>

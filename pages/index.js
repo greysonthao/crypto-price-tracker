@@ -16,7 +16,7 @@ export default function Home(props) {
   const [search, setSearch] = React.useState("");
 
   //THIS FILTERS THE LIST THAT IS DISPLAYED
-  /* const allAssets = data.filter(
+  const allAssets = data.filter(
     (asset) =>
       asset.name.toLowerCase().includes(search.toLowerCase()) ||
       asset.symbol.toLowerCase().includes(search.toLowerCase())
@@ -26,7 +26,7 @@ export default function Home(props) {
     e.preventDefault();
 
     setSearch(e.target.value.toLowerCase());
-  }; */
+  };
 
   return (
     <div className={styles.container}>
@@ -38,7 +38,7 @@ export default function Home(props) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar /* handleChange={handleChange} */ />
+      <Navbar handleChange={handleChange} />
       <Container maxWidth="xl">
         <Carousel />
         <Box marginTop={3}>
@@ -52,13 +52,14 @@ export default function Home(props) {
           >
             Cryptocurrency Prices By Market Cap
           </Typography>
-          <DataTable data={data} />
+          <DataTable data={allAssets} />
         </Box>
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
-            marginTop: 3,
+            marginTop: "2rem",
+            marginBottom: "10rem",
           }}
         >
           <Pagination />

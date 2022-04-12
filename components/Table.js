@@ -74,7 +74,7 @@ export default function CustomizedTables(props) {
           </a>
         </Link>
       </StyledTableCell>
-      <StyledTableCell align="right">
+      <StyledTableCell align="left">
         {coin.symbol.toUpperCase()}
       </StyledTableCell>
       <StyledTableCell align="right">
@@ -108,7 +108,7 @@ export default function CustomizedTables(props) {
           <TableRow>
             <StyledTableCell>#</StyledTableCell>
             <StyledTableCell align="left">Name</StyledTableCell>
-            <StyledTableCell align="right">Symbol</StyledTableCell>
+            <StyledTableCell align="left">Symbol</StyledTableCell>
             <StyledTableCell align="right">Price</StyledTableCell>
             <StyledTableCell align="right">24Hr Change</StyledTableCell>
             <StyledTableCell align="right">Market Cap</StyledTableCell>

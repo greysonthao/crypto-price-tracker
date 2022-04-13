@@ -192,7 +192,7 @@ export default function Details() {
             </Box>
           </Grid>
           <Grid item xs={12} sm={8} marginTop="1.5rem">
-            <Chart />
+            <Chart coin={coinData.id} />
           </Grid>
         </Grid>
       </Container>

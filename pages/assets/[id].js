@@ -9,7 +9,7 @@ import Image from "next/image";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Chart from "../../components/Chart";
-import parse from "html-react-parser";
+import CircularProgress from "../../components/CircularProgress";
 
 export default function Details() {
   const {
@@ -39,21 +39,23 @@ export default function Details() {
 
   if (!coinData) {
     return (
-      <div>
-        <Box>
-          <Typography variant="h1" color="white">
-            Loading...
-          </Typography>
-        </Box>
-      </div>
+      <Box display="flex" justifyContent="center">
+        <CircularProgress />
+      </Box>
     );
   }
 
-  /* let coinDescription = coinData.description.en.split(". ", 1); */
+  const coinDescriptionShortener = () => {
+    let coinDescription = coinData.description.en;
 
-  let coinDescription = coinData.description.en;
+    coinDescription = coinDescription.split(". ", 1);
 
-  coinDescription = parse(String(coinDescription));
+    coinDescription = String(coinDescription).replace(/(<([^>]+)>)/gi, "");
+
+    return coinDescription + ".";
+  };
+
+  let totalMarketCap = formatDollar(coinData.market_data.market_cap.usd);
 
   return (
     <div>
@@ -68,25 +70,26 @@ export default function Details() {
       <Navbar />
       <Container maxWidth="xl">
         <Grid container>
-          <Grid item sx={12} sm={4}>
-            <Box
-              display="flex"
-              alignItems="center"
-              sx={{
-                marginTop: 3,
-              }}
-            >
+          <Grid item xs={12} sm={4}>
+            <Box display="flex" justifyContent="center" marginTop="1.5rem">
               <Image
                 src={coinData.image.large}
                 alt={coinData.name}
-                width={55}
-                height={55}
+                width={100}
+                height={100}
               />
+            </Box>
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              marginTop=".5rem"
+            >
               <Typography
                 variant="h4"
                 components="h1"
+                fontWeight="bold"
                 color="white"
-                marginLeft={1.5}
               >
                 {coinData.name}
               </Typography>
@@ -102,12 +105,17 @@ export default function Details() {
                 </Typography>
               </Card>
             </Box>
-            <Box display="flex">
+            <Box
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              marginTop=".1rem"
+            >
               <Typography
-                variant="h3"
+                variant="h2"
+                fontWeight="bold"
                 components="h3"
                 color="white"
-                paddingLeft={1.25}
               >
                 {formatDollar(coinData.market_data.current_price.usd)}
               </Typography>
@@ -115,8 +123,8 @@ export default function Details() {
                 variant="h6"
                 components="p"
                 color="white"
-                marginLeft={1.25}
-                marginTop=".75rem"
+                fontWeight="bold"
+                marginLeft=".75rem"
                 sx={{
                   color: "white",
                   ...(coinData.market_data.price_change_percentage_24h > 0 && {
@@ -132,17 +140,58 @@ export default function Details() {
             </Box>
             <Box>
               <Typography
+                variant="h6"
+                components="p"
+                color="white"
+                fontWeight="bold"
+                textAlign="center"
+                marginTop=".2rem"
+              >
+                Ranking:{" "}
+                <Box component="span" fontWeight="normal">
+                  #{coinData.market_cap_rank}
+                </Box>
+              </Typography>
+              <Typography
+                variant="h6"
+                components="p"
+                color="white"
+                fontWeight="bold"
+                textAlign="center"
+              >
+                Market Cap:{" "}
+                <Box component="span" fontWeight="normal">
+                  {totalMarketCap}
+                </Box>
+              </Typography>
+              <Typography
                 variant="body1"
                 components="p"
                 color="white"
-                marginTop={3}
+                marginTop="1rem"
                 textAlign="justify"
               >
-                {coinDescription}.
+                {coinDescriptionShortener()}
+              </Typography>
+              <Typography
+                variant="body2"
+                components="p"
+                color="white"
+                marginTop="1.25rem"
+                textAlign="center"
+              >
+                website:{" "}
+                <a
+                  target="_blank"
+                  href={coinData.links.homepage[0]}
+                  rel="noopener noreferrer"
+                >
+                  {coinData.links.homepage[0]}
+                </a>
               </Typography>
             </Box>
           </Grid>
-          <Grid item sx={12} sm={8} marginTop={3}>
+          <Grid item xs={12} sm={8} marginTop="1.5rem">
             <Chart />
           </Grid>
         </Grid>

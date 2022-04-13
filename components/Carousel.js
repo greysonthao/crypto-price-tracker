@@ -5,10 +5,7 @@ import Typography from "@mui/material/Typography";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import Link from "next/link";
-import Image from "next/image";
-import CoinGecko from "coingecko-api";
-
-const coinGeckClient = new CoinGecko();
+import CircularProgress from "../components/CircularProgress";
 
 export default function Carousel() {
   const [trending, setTrending] = React.useState([]);
@@ -35,6 +32,10 @@ export default function Carousel() {
     fetchTrendingAssets();
     fetchBtcExchangeRate();
   }, []);
+
+  if (trending.length === 0) {
+    <CircularProgress />;
+  }
 
   const coinConvertor = (assetBtcPrice) => {
     //when I add the select in the menu, add a condition here

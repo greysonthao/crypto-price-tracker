@@ -6,7 +6,6 @@ import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
-import { createTheme } from "@mui/material/styles";
 
 const chartDays = [
   {
@@ -49,12 +48,11 @@ export default function CoinChart(props) {
   React.useEffect(() => {
     fetchHistoricalData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    console.log("days", days);
   }, [days]);
 
-  if (historicalData.length === 0) {
-    return <div>Loading...</div>;
-  }
+  const handleClick = (event, newDays) => {
+    setDays(newDays);
+  };
 
   if (historicalData.length === 0) {
     return (
@@ -64,14 +62,8 @@ export default function CoinChart(props) {
     );
   }
 
-  console.log("historicalData", historicalData);
-
-  const handleClick = (event, newDays) => {
-    setDays(newDays);
-  };
-
   return (
-    <Box marginLeft="1.5rem">
+    <Box marginLeft="1.5rem" marginBottom="7rem">
       <Box>
         <Line
           data={{
@@ -107,16 +99,22 @@ export default function CoinChart(props) {
           exclusive
           onChange={handleClick}
           aria-label="Number of Days"
-          color="secondary"
+          color="info"
+          spacing={2}
         >
           {chartDays.map((day) => (
             <ToggleButton
-              variant="outline"
-              color="primary"
+              variant="outlined"
               key={day.value}
               onClick={() => setDays(day.value)}
               value={day.value}
               aria-label={day.label}
+              sx={{
+                "&.MuiButton-root": { color: "#FFFFFF" },
+                border: "2px white solid",
+                color: "#FFFFFF",
+                fontWeight: "bold",
+              }}
             >
               {day.label}
             </ToggleButton>

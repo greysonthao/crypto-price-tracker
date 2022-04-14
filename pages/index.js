@@ -85,12 +85,12 @@ export default function Home() {
         <title>Crypto Tracker</title>
         <meta
           name="description"
-          content="Track the prices of your favorite crypto asset"
+          content="Track the prices of your favorite crypto assets."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar handleChange={handleChange} />
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         <Carousel />
         <Box marginTop={3}>
           <Typography

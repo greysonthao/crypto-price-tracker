@@ -71,7 +71,7 @@ export default function Details() {
       <Container maxWidth="xl">
         <Grid container>
           <Grid item xs={12} sm={4}>
-            <Box display="flex" justifyContent="center" marginTop="1.5rem">
+            <Box display="flex" justifyContent="center" marginTop="4.5rem">
               <Image
                 src={coinData.image.large}
                 alt={coinData.name}
@@ -117,7 +117,9 @@ export default function Details() {
                 components="h3"
                 color="white"
               >
-                {formatDollar(coinData.market_data.current_price.usd)}
+                {coinData.market_data.current_price.usd > 1
+                  ? formatDollar(coinData.market_data.current_price.usd)
+                  : formatDollar(coinData.market_data.current_price.usd, 7)}
               </Typography>
               <Typography
                 variant="h6"
@@ -191,7 +193,7 @@ export default function Details() {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={8} marginTop="1.5rem">
+          <Grid item xs={12} sm={8} marginTop="4.5rem">
             <Chart coin={coinData.id} />
           </Grid>
         </Grid>

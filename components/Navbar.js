@@ -12,6 +12,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import logo from "../public/Astral-logo-2.png";
+import Image from "next/image";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -67,14 +69,23 @@ export default function SearchAppBar(props) {
         >
           <Link href="/">
             <a>
-              <Typography
-                variant="h6"
-                noWrap
-                component="div"
-                sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-              >
-                Crypto Tracker
-              </Typography>
+              <Box display="flex" justifyContent="center" alignItems="center">
+                <Image
+                  src={logo}
+                  alt="Astral Finance Logo"
+                  width={50}
+                  height={50}
+                />
+                <Typography
+                  variant="h6"
+                  noWrap
+                  fontFamily="inherit"
+                  fontWeight={900}
+                  sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+                >
+                  ASTRAL
+                </Typography>
+              </Box>
             </a>
           </Link>
           <Search onChange={props.handleChange}>

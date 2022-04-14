@@ -18,6 +18,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
+    /* color: theme.palette.common.white, */
+    border: theme.palette.common.black,
   },
 }));
 
@@ -78,7 +80,9 @@ export default function CustomizedTables(props) {
         {coin.symbol.toUpperCase()}
       </StyledTableCell>
       <StyledTableCell align="right">
-        {formatDollar(coin.current_price)}
+        {coin.current_price > 1
+          ? formatDollar(coin.current_price)
+          : formatDollar(coin.current_price, 7)}
       </StyledTableCell>
       <StyledTableCell
         align="right"

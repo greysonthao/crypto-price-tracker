@@ -16,6 +16,8 @@ export default function Details() {
     query: { id },
   } = useRouter();
 
+  console.log(id);
+
   const [coinData, setCoinData] = React.useState(null);
 
   async function getCoinData() {
@@ -26,7 +28,6 @@ export default function Details() {
   React.useEffect(() => {
     if (id) {
       getCoinData();
-      console.log(coinData);
     }
   }, []);
 
@@ -39,7 +40,7 @@ export default function Details() {
 
   if (!coinData) {
     return (
-      <Box display="flex" justifyContent="center">
+      <Box display="flex" justifyContent="center" marginTop="3rem">
         <CircularProgress />
       </Box>
     );

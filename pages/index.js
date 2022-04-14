@@ -1,6 +1,6 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { Box, Typography, Container } from "@mui/material";
+import { Box, Typography, Container, Paper, Grid } from "@mui/material";
 import Navbar from "../components/Navbar";
 import DataTable from "../components/Table";
 import Pagination from "../components/Pagination";
@@ -10,12 +10,13 @@ import CircularProgress from "../components/CircularProgress";
 
 export default function Home() {
   const [data, setData] = React.useState([]);
-
+  const [marketCapData, setMarketCapData] = React.useState([]);
+  const [pageNum, setPageNum] = React.useState(1);
   const [search, setSearch] = React.useState("");
 
   const fetchAssets = async () => {
     const response = await fetch(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false"
+      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=${pageNum}&sparkline=false`
     );
 
     const result = await response.json();
@@ -23,9 +24,21 @@ export default function Home() {
     setData(result);
   };
 
+  const fetchMarketData = async () => {
+    const response = await fetch("https://api.coingecko.com/api/v3/global");
+
+    const result = await response.json();
+
+    setMarketCapData(result);
+  };
+
+  React.useEffect(() => {
+    fetchMarketData();
+  }, []);
+
   React.useEffect(() => {
     fetchAssets();
-  }, []);
+  }, [pageNum]);
 
   //THIS FILTERS THE LIST THAT IS DISPLAYED
   const allAssets = data.filter(
@@ -40,9 +53,27 @@ export default function Home() {
     setSearch(e.target.value.toLowerCase());
   };
 
-  if (data.length === 0) {
+  const styles = {
+    backgroundColor: "black",
+    color: "white",
+    padding: 1.5,
+    borderRadius: 3,
+  };
+
+  const formatDollar = (number, maximumSignificantDigits) =>
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "usd",
+      maximumSignificantDigits,
+    }).format(number);
+
+  function handlePageChange(event, value) {
+    setPageNum(value);
+  }
+
+  if (data.length === 0 || marketCapData.length === 0) {
     return (
-      <Box display="flex" justifyContent="center">
+      <Box display="flex" justifyContent="center" marginTop="1rem" size="200">
         <CircularProgress />
       </Box>
     );
@@ -59,7 +90,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar handleChange={handleChange} />
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <Carousel />
         <Box marginTop={3}>
           <Typography
@@ -68,10 +99,71 @@ export default function Home() {
             fontWeight="bold"
             textAlign="center"
             color="white"
-            marginBottom={2}
           >
             Cryptocurrency Prices By Market Cap
           </Typography>
+          <Typography
+            variant="body1"
+            component="p"
+            color="white"
+            marginBottom={2}
+            textAlign="center"
+          >
+            The global cryptocurrency market cap today is{" "}
+            {formatDollar(marketCapData.data.total_market_cap.usd)}, a{" "}
+            <Box
+              component="span"
+              sx={{
+                color:
+                  marketCapData.data.total_market_cap.usd > 0 ? "green" : "red",
+              }}
+            >
+              {marketCapData.data.market_cap_change_percentage_24h_usd.toFixed(
+                2
+              )}
+              %
+              <Box component="span">
+                {marketCapData.data.total_market_cap.usd > 0 ? " ⬆" : " ⬇"}
+              </Box>
+            </Box>{" "}
+            change in the last 24 hours.
+          </Typography>
+          <Box display="flex" justifyContent="center" marginBottom={3}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={3}>
+                <Paper sx={styles}>
+                  <Typography variant="h5">
+                    {formatDollar(marketCapData.data.total_market_cap.usd)}
+                  </Typography>
+                  <Typography>Market Capitalization</Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <Paper sx={styles}>
+                  <Typography variant="h5">
+                    {formatDollar(marketCapData.data.total_volume.usd)}
+                  </Typography>
+                  <Typography>24 Hr Trading Volume</Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <Paper sx={styles}>
+                  <Typography variant="h5">
+                    {marketCapData.data.market_cap_percentage.btc.toFixed(2)}%
+                  </Typography>
+                  <Typography>BTC Market Cap Dominance</Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <Paper sx={styles}>
+                  <Typography variant="h5">
+                    {marketCapData.data.active_cryptocurrencies}
+                  </Typography>
+                  <Typography># of Coins</Typography>
+                </Paper>
+              </Grid>
+            </Grid>
+          </Box>
           <DataTable data={allAssets} />
         </Box>
         <Box
@@ -82,7 +174,11 @@ export default function Home() {
             marginBottom: "10rem",
           }}
         >
-          <Pagination />
+          <Pagination
+            count={Math.ceil(marketCapData.data.active_cryptocurrencies / 100)}
+            page={pageNum}
+            handlePageChange={handlePageChange}
+          />
         </Box>
       </Container>
     </div>

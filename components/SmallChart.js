@@ -30,7 +30,7 @@ const chartDays = [
   },
 ];
 
-export default function CoinChart(props) {
+export default function SmallCoinChart(props) {
   const { coin } = props;
   const [historicalData, setHistoricalData] = React.useState([]);
   const [days, setDays] = React.useState(1);
@@ -63,7 +63,7 @@ export default function CoinChart(props) {
   }
 
   return (
-    <Box marginLeft="1.5rem" marginBottom="7rem" marginRight="1.5rem">
+    <Box width={150} display="block" marginLeft="auto" marginRight="auto">
       <Box>
         <Line
           data={{
@@ -80,14 +80,15 @@ export default function CoinChart(props) {
               {
                 data: historicalData.map((coin) => coin[1]),
                 label: `Price (Past ${days} Days) in USD`,
-                borderColor: "white",
+                borderColor: "black",
+                borderWidth: 0.85,
               },
             ],
           }}
           options={{
             elements: {
               point: {
-                radius: 1,
+                radius: 0.1,
               },
             },
             scales: {
@@ -98,39 +99,18 @@ export default function CoinChart(props) {
                 display: false,
               },
             },
-            legend: {
+            plugins: {
+              legend: {
+                display: false,
+              },
+            },
+
+            datalabels: {
               display: false,
             },
+            events: [],
           }}
         />
-      </Box>
-      <Box display="flex" justifyContent="center" marginTop="1.5rem">
-        <ToggleButtonGroup
-          value={days}
-          exclusive
-          onChange={handleClick}
-          aria-label="Number of Days"
-          color="info"
-          spacing={2}
-        >
-          {chartDays.map((day) => (
-            <ToggleButton
-              variant="outlined"
-              key={day.value}
-              onClick={() => setDays(day.value)}
-              value={day.value}
-              aria-label={day.label}
-              sx={{
-                "&.MuiButton-root": { color: "#FFFFFF" },
-                border: "2px white solid",
-                color: "#FFFFFF",
-                fontWeight: "bold",
-              }}
-            >
-              {day.label}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
       </Box>
     </Box>
   );

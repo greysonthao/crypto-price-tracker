@@ -16,7 +16,7 @@ export default function Home() {
 
   const fetchAssets = async () => {
     const response = await fetch(
-      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=${pageNum}&sparkline=false`
+      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=${pageNum}&sparkline=false`
     );
 
     const result = await response.json();
@@ -175,7 +175,7 @@ export default function Home() {
           }}
         >
           <Pagination
-            count={Math.ceil(marketCapData.data.active_cryptocurrencies / 100)}
+            count={Math.ceil(marketCapData.data.active_cryptocurrencies / 20)}
             page={pageNum}
             handlePageChange={handlePageChange}
           />

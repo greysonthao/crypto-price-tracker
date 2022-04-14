@@ -10,11 +10,13 @@ import Paper from "@mui/material/Paper";
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import SmallChart from "../components/SmallChart";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
+    fontWeight: theme.typography.fontWeightBold,
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -101,7 +103,15 @@ export default function CustomizedTables(props) {
       <StyledTableCell align="right">
         {formatDollar(coin.market_cap, 20)}
       </StyledTableCell>
-      <StyledTableCell align="right">24Hr Chart</StyledTableCell>
+      {/* <StyledTableCell align="right">24Hr Chart</StyledTableCell> */}
+      <StyledTableCell
+        align="right"
+        sx={{
+          padding: 0,
+        }}
+      >
+        <SmallChart coin={coin.id} height={50} />
+      </StyledTableCell>
     </StyledTableRow>
   ));
 
@@ -116,7 +126,7 @@ export default function CustomizedTables(props) {
             <StyledTableCell align="right">Price</StyledTableCell>
             <StyledTableCell align="right">24Hr Change</StyledTableCell>
             <StyledTableCell align="right">Market Cap</StyledTableCell>
-            <StyledTableCell align="right">24Hr Chart</StyledTableCell>
+            <StyledTableCell align="center">24Hr Chart</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>{tableElements}</TableBody>

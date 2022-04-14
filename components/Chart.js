@@ -54,6 +54,14 @@ export default function CoinChart(props) {
     setDays(newDays);
   };
 
+  function dayOrDays() {
+    if (days === 1) {
+      return "Day";
+    } else {
+      return "Days";
+    }
+  }
+
   if (historicalData.length === 0) {
     return (
       <Box display="flex" justifyContent="center" marginTop="2rem">
@@ -79,7 +87,7 @@ export default function CoinChart(props) {
             datasets: [
               {
                 data: historicalData.map((coin) => coin[1]),
-                label: `Price (Past ${days} Days) in USD`,
+                label: `Price (Past ${days} ${dayOrDays()}) in USD`,
                 borderColor: "white",
               },
             ],
@@ -89,17 +97,6 @@ export default function CoinChart(props) {
               point: {
                 radius: 1,
               },
-            },
-            scales: {
-              x: {
-                display: false,
-              },
-              y: {
-                display: false,
-              },
-            },
-            legend: {
-              display: false,
             },
           }}
         />

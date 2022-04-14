@@ -13,10 +13,11 @@ export default function Home() {
   const [marketCapData, setMarketCapData] = React.useState([]);
   const [pageNum, setPageNum] = React.useState(1);
   const [search, setSearch] = React.useState("");
+  const [numPerPage, setNumPerPage] = React.useState(20);
 
   const fetchAssets = async () => {
     const response = await fetch(
-      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=20&page=${pageNum}&sparkline=false`
+      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=${numPerPage}&page=${pageNum}&sparkline=false`
     );
 
     const result = await response.json();
@@ -133,7 +134,10 @@ export default function Home() {
               <Grid item xs={12} sm={3}>
                 <Paper sx={styles}>
                   <Typography variant="h5">
-                    {formatDollar(marketCapData.data.total_market_cap.usd)}
+                    $
+                    {Math.ceil(
+                      marketCapData.data.total_market_cap.usd
+                    ).toLocaleString("en-US")}
                   </Typography>
                   <Typography>Market Capitalization</Typography>
                 </Paper>
@@ -141,7 +145,10 @@ export default function Home() {
               <Grid item xs={12} sm={3}>
                 <Paper sx={styles}>
                   <Typography variant="h5">
-                    {formatDollar(marketCapData.data.total_volume.usd)}
+                    $
+                    {Math.ceil(
+                      marketCapData.data.total_volume.usd
+                    ).toLocaleString("en-US")}
                   </Typography>
                   <Typography>24 Hr Trading Volume</Typography>
                 </Paper>
@@ -175,7 +182,9 @@ export default function Home() {
           }}
         >
           <Pagination
-            count={Math.ceil(marketCapData.data.active_cryptocurrencies / 20)}
+            count={Math.ceil(
+              marketCapData.data.active_cryptocurrencies / numPerPage
+            )}
             page={pageNum}
             handlePageChange={handlePageChange}
           />

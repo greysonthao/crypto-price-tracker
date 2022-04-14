@@ -14,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import logo from "../public/Astral-logo-2.png";
 import Image from "next/image";
+import AuthModal from "./Authentication/AuthModal";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -65,6 +66,7 @@ export default function SearchAppBar(props) {
           sx={{
             backgroundColor: "black",
             justifyContent: "space-between",
+            padding: 0.75,
           }}
         >
           <Link href="/">
@@ -75,6 +77,9 @@ export default function SearchAppBar(props) {
                   alt="Astral Finance Logo"
                   width={50}
                   height={50}
+                  sx={{
+                    paddingLeft: 0,
+                  }}
                 />
                 <Typography
                   variant="h6"
@@ -88,33 +93,23 @@ export default function SearchAppBar(props) {
               </Box>
             </a>
           </Link>
-          <Search onChange={props.handleChange}>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
-        </Toolbar>
-        {/*  <Toolbar variant="dense">
-          <Select
-            variant="outlined"
-            defaultValue="USD"
+          <Box
             sx={{
-              width: 100,
-              height: 30,
-              marginLeft: 15,
-              color: "white",
+              marginLeft: "auto",
             }}
           >
-            <MenuItem value="USD">USD</MenuItem>
-            <MenuItem value="THB">BTC</MenuItem>
-            <MenuItem value="THB">ETH</MenuItem>
-          </Select>
-          <AccountCircle />
-        </Toolbar> */}
+            <Search onChange={props.handleChange}>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+          </Box>
+          <AuthModal />
+        </Toolbar>
       </AppBar>
     </Box>
   );

@@ -7,6 +7,7 @@ import Pagination from "../components/Pagination";
 import Carousel from "../components/Carousel";
 import React from "react";
 import CircularProgress from "../components/CircularProgress";
+import Alert from "../components/Alert";
 
 export default function Home() {
   const [data, setData] = React.useState([]);
@@ -14,6 +15,7 @@ export default function Home() {
   const [pageNum, setPageNum] = React.useState(1);
   const [search, setSearch] = React.useState("");
   const [numPerPage, setNumPerPage] = React.useState(20);
+  const [user, setUser] = React.useState(null);
 
   const fetchAssets = async () => {
     const response = await fetch(
@@ -92,7 +94,7 @@ export default function Home() {
       </Head>
       <Navbar handleChange={handleChange} />
       <Container maxWidth="xl">
-        <Carousel />
+        {/* <Carousel /> */}
         <Box marginTop={3}>
           <Typography
             variant="h5"
@@ -116,7 +118,9 @@ export default function Home() {
               component="span"
               sx={{
                 color:
-                  marketCapData.data.total_market_cap.usd > 0 ? "green" : "red",
+                  marketCapData.data.market_cap_change_percentage_24h_usd > 0
+                    ? "green"
+                    : "red",
               }}
             >
               {marketCapData.data.market_cap_change_percentage_24h_usd.toFixed(
@@ -124,7 +128,9 @@ export default function Home() {
               )}
               %
               <Box component="span">
-                {marketCapData.data.total_market_cap.usd > 0 ? " ⬆" : " ⬇"}
+                {marketCapData.data.market_cap_change_percentage_24h_usd > 0
+                  ? " ⬆"
+                  : " ⬇"}
               </Box>
             </Box>{" "}
             change in the last 24 hours.
@@ -158,7 +164,7 @@ export default function Home() {
                   <Typography variant="h5">
                     {marketCapData.data.market_cap_percentage.btc.toFixed(2)}%
                   </Typography>
-                  <Typography>BTC Market Cap Dominance</Typography>
+                  <Typography>BTC Dominance</Typography>
                 </Paper>
               </Grid>
               <Grid item xs={12} sm={3}>

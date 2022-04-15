@@ -28,12 +28,6 @@ export default function AuthModal() {
 
   const [open, setOpen] = React.useState(false);
 
-  const [alert, SetAlert] = React.useState({
-    open: false,
-    message: "",
-    type: "success",
-  });
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -75,17 +69,9 @@ export default function AuthModal() {
             </Tabs>
           </AppBar>
           {value === 0 ? (
-            <Login
-              handleClose={handleClose}
-              alert={alert}
-              /* setAlert={setAlert} */
-            />
+            <Login handleClose={handleClose} />
           ) : (
-            <Signup
-              handleClose={handleClose}
-              alert={alert}
-              /* setAlert={setAlert} */
-            />
+            <Signup handleClose={handleClose} />
           )}
         </Box>
       </Modal>

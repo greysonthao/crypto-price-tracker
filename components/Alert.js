@@ -21,7 +21,12 @@ export default function Alert() {
 
   return (
     <Box>
-      <Snackbar open={alert.open} autoHideDuration={3000} onClose={handleClose}>
+      <Snackbar
+        open={alert.open}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
         <Box>
           <MuiAlert
             onClose={handleClose}

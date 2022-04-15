@@ -1,21 +1,24 @@
 import React, { createContext, useContext } from "react";
-/* import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./firebase";
-import { onSnapshot, doc } from "firebase/firestore"; */
+/* import { onSnapshot, doc } from "firebase/firestore"; */
 
 const Crypto = createContext();
 
 const CryptoContext = ({ children }) => {
-  /*   const [currency, setCurrency] = useState("INR");
-  const [symbol, setSymbol] = useState("₹"); */
+  const [user, setUser] = React.useState(null);
+  const [watchlist, setWatchlist] = React.useState([]);
   const [alert, setAlert] = React.useState({
     open: false,
     message: "",
     type: "success",
   });
 
-  const [user, setUser] = React.useState(null);
-  const [watchlist, setWatchlist] = React.useState([]);
+  React.useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      user ? setUser(user) : setUser(null);
+    });
+  }, []);
 
   return (
     <Crypto.Provider

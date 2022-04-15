@@ -20,11 +20,7 @@ export default function Signup(props) {
         type: "error",
       });
       return;
-    } else if (
-      email.length === 0 ||
-      password.length === 0 ||
-      confirmPassword.length === 0
-    ) {
+    } else if (!email || !password || !confirmPassword) {
       setAlert({
         open: true,
         message: "All fields are required",
@@ -94,7 +90,9 @@ export default function Signup(props) {
         variant="contained"
         size="large"
         onClick={handleSubmit}
-        sx={{ backgroundColor: "black" }}
+        sx={{
+          backgroundColor: "black",
+        }}
       >
         Submit
       </Button>

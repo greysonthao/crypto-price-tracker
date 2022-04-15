@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./firebase";
-/* import { onSnapshot, doc } from "firebase/firestore"; */
+import { onSnapshot, doc } from "firebase/firestore";
 
 const Crypto = createContext();
 
@@ -19,6 +19,24 @@ const CryptoContext = ({ children }) => {
       user ? setUser(user) : setUser(null);
     });
   }, []);
+
+  React.useEffect(() => {
+    if (user) {
+      const coinRef = doc(db, "watchlist", user.uid);
+
+      let unsubscribe = onSnapshot(coinRef, (asset) => {
+        if (asset.exists()) {
+          console.log("watchlist: ", asset.data().assets);
+          setWatchlist(asset.data().assets);
+        } else {
+          console.log("No items in the watchlist");
+        }
+      });
+      return () => {
+        unsubscribe();
+      };
+    }
+  }, [user]);
 
   return (
     <Crypto.Provider

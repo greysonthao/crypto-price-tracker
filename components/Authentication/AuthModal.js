@@ -89,11 +89,14 @@ export default function AuthModal() {
       });
   };
 
+  const handleWatchlistClick = () => {
+    console.log("clicked on menu watchlist button");
+  };
+
   if (user) {
     return (
       <div>
         <Box
-          /* onClick={handleOpenMenu} */
           sx={{
             cursor: "pointer",
             marginLeft: "1rem",
@@ -116,8 +119,8 @@ export default function AuthModal() {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem onClick={handleCloseMenu}>Watchlist</MenuItem>
-          <MenuItem onClick={handleCloseMenu}>Portfolio</MenuItem>
+          <MenuItem onClick={handleWatchlistClick}>Watchlist</MenuItem>
+          {/* <MenuItem onClick={handleCloseMenu}>Portfolio</MenuItem> */}
           <MenuItem onClick={logOut}>Logout</MenuItem>
         </Menu>
       </div>

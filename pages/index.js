@@ -1,5 +1,4 @@
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
 import { Box, Typography, Container, Paper, Grid } from "@mui/material";
 import Navbar from "../components/Navbar";
 import DataTable from "../components/Table";
@@ -7,7 +6,6 @@ import Pagination from "../components/Pagination";
 import Carousel from "../components/Carousel";
 import React from "react";
 import CircularProgress from "../components/CircularProgress";
-import Alert from "../components/Alert";
 
 export default function Home() {
   const [data, setData] = React.useState([]);
@@ -83,9 +81,9 @@ export default function Home() {
   }
 
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
-        <title>Crypto Tracker</title>
+        <title>Astral: Crypocurrency Prices</title>
         <meta
           name="description"
           content="Track the prices of your favorite crypto assets."

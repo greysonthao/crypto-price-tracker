@@ -82,7 +82,7 @@ export default function CustomizedTables(props) {
         {coin.symbol.toUpperCase()}
       </StyledTableCell>
       <StyledTableCell align="right">
-        {coin.current_price > 1
+        {coin.current_price > 0.1
           ? formatDollar(coin.current_price)
           : formatDollar(coin.current_price, 7)}
       </StyledTableCell>

@@ -39,14 +39,15 @@ export default function Home() {
 
   React.useEffect(() => {
     fetchAssets();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageNum]);
 
   //THIS FILTERS THE LIST THAT IS DISPLAYED
-  const allAssets = data.filter(
+  /*  const allAssets = data.filter(
     (asset) =>
       asset.name.toLowerCase().includes(search.toLowerCase()) ||
       asset.symbol.toLowerCase().includes(search.toLowerCase())
-  );
+  ); */
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -92,7 +93,7 @@ export default function Home() {
       </Head>
       <Navbar handleChange={handleChange} />
       <Container maxWidth="xl">
-        {/* <Carousel /> */}
+        <Carousel />
         <Box marginTop={3}>
           <Typography
             variant="h5"
@@ -175,7 +176,7 @@ export default function Home() {
               </Grid>
             </Grid>
           </Box>
-          <DataTable data={allAssets} />
+          <DataTable data={data} />
         </Box>
         <Box
           sx={{

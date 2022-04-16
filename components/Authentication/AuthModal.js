@@ -17,6 +17,7 @@ import { auth } from "../../firebase";
 import Divider from "@mui/material/Divider";
 import GoogleIcon from "@mui/icons-material/Google";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import Link from "next/link";
 
 const style = {
   position: "absolute",
@@ -119,8 +120,11 @@ export default function AuthModal() {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem onClick={handleWatchlistClick}>Watchlist</MenuItem>
-          {/* <MenuItem onClick={handleCloseMenu}>Portfolio</MenuItem> */}
+          <MenuItem>
+            <Link href="/watchlist">
+              <a>Watchlist</a>
+            </Link>
+          </MenuItem>
           <MenuItem onClick={logOut}>Logout</MenuItem>
         </Menu>
       </div>

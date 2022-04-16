@@ -20,7 +20,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
-    /* color: theme.palette.common.white, */
     border: theme.palette.common.black,
   },
 }));
@@ -103,7 +102,6 @@ export default function CustomizedTables(props) {
       <StyledTableCell align="right">
         {formatDollar(coin.market_cap, 20)}
       </StyledTableCell>
-      {/* <StyledTableCell align="right">24Hr Chart</StyledTableCell> */}
       <StyledTableCell
         align="right"
         sx={{

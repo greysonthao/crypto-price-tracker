@@ -4,8 +4,39 @@ import Navbar from "../components/Navbar";
 import DataTable from "../components/Table";
 import React from "react";
 import CircularProgress from "../components/CircularProgress";
+import { CryptoState } from "../cryptoContext";
 
-export default function watchlist() {
+export default function Watchlist() {
+  const { watchlist } = CryptoState();
+
+  const [watchlistData, setWatchlistData] = React.useState([]);
+
+  React.useEffect(() => {
+    if (watchlist.length === 0) {
+      return;
+    }
+
+    fetchWatchlistDada();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchlist]);
+
+  const fetchWatchlistDada = async () => {
+    let csvString = "";
+    for (let i = 0; i < watchlist.length; i++) {
+      csvString += String(watchlist[i]);
+      csvString += "%2C";
+    }
+
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${csvString}&order=market_cap_desc&per_page=20&page=1&sparkline=false`
+    );
+
+    const result = await response.json();
+
+    setWatchlistData(result);
+  };
+
   return (
     <div>
       <Head>
@@ -25,11 +56,12 @@ export default function watchlist() {
             fontWeight="bold"
             textAlign="center"
             color="white"
+            marginBottom="1rem"
           >
             Watchlist
           </Typography>
 
-          {/*  <DataTable data={allAssets} /> */}
+          <DataTable data={watchlistData} />
         </Box>
         <Box
           sx={{
@@ -38,7 +70,18 @@ export default function watchlist() {
             marginTop: "2rem",
             marginBottom: "10rem",
           }}
-        ></Box>
+        >
+          {watchlistData.length === 0 && (
+            <Typography
+              variant="h6"
+              component="h4"
+              fontWeight="bold"
+              color="white"
+            >
+              Your list is empty.
+            </Typography>
+          )}
+        </Box>
       </Container>
     </div>
   );

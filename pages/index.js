@@ -93,7 +93,7 @@ export default function Home() {
       </Head>
       <Navbar handleChange={handleChange} />
       <Container maxWidth="xl">
-        <Carousel />
+        {/* <Carousel /> */}
         <Box marginTop={3}>
           <Typography
             variant="h5"

@@ -71,7 +71,6 @@ export default function AuthModal() {
   const googleProvider = new GoogleAuthProvider();
 
   const signInWithGoogle = () => {
-    console.log("google button");
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         setAlert({
@@ -88,10 +87,6 @@ export default function AuthModal() {
           type: "error",
         });
       });
-  };
-
-  const handleWatchlistClick = () => {
-    console.log("clicked on menu watchlist button");
   };
 
   if (user) {

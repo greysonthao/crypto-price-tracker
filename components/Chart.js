@@ -77,11 +77,10 @@ export default function CoinChart(props) {
           data={{
             labels: historicalData.map((coin) => {
               let date = new Date(coin[0]);
-              let time =
-                date.getHours() > 12
-                  ? `${date.getHours() - 12}: ${date.getMinutes()} PM`
-                  : `${date.getHours()}:${date.getMinutes()} AM`;
-
+              let time = date.toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+              });
               return days === 1 ? time : date.toLocaleDateString();
             }),
             datasets: [

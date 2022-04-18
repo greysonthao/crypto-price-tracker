@@ -66,21 +66,35 @@ export default function CustomizedTables(props) {
               <Typography
                 variant="body1"
                 component="p"
+                fontWeight="bold"
                 sx={{
                   marginLeft: 1,
-                  fontSize: "0.87rem",
+                  fontSize: ".9rem",
                 }}
               >
                 {coin.name}
+                <Box
+                  component="span"
+                  sx={{
+                    fontWeight: "normal",
+                    marginLeft: ".75rem",
+                    fontSize: ".75rem",
+                  }}
+                >
+                  {coin.symbol.toUpperCase()}
+                </Box>
               </Typography>
             </Box>
           </a>
         </Link>
       </StyledTableCell>
-      <StyledTableCell align="left">
-        {coin.symbol.toUpperCase()}
-      </StyledTableCell>
-      <StyledTableCell align="right">
+
+      <StyledTableCell
+        align="right"
+        sx={{
+          fontWeight: "bold",
+        }}
+      >
         {coin.current_price > 0.1
           ? formatDollar(coin.current_price)
           : formatDollar(coin.current_price, 7)}
@@ -120,7 +134,6 @@ export default function CustomizedTables(props) {
           <TableRow>
             <StyledTableCell>#</StyledTableCell>
             <StyledTableCell align="left">Name</StyledTableCell>
-            <StyledTableCell align="left">Symbol</StyledTableCell>
             <StyledTableCell align="right">Price</StyledTableCell>
             <StyledTableCell align="right">24Hr Change</StyledTableCell>
             <StyledTableCell align="right">Market Cap</StyledTableCell>

@@ -10,6 +10,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import logo from "../public/Astral-logo-2.png";
 import Image from "next/image";
 import AuthModal from "./Authentication/AuthModal";
+import Autocomplete from "./Autocomplete";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -93,15 +94,7 @@ export default function SearchAppBar(props) {
               marginLeft: "auto",
             }}
           >
-            <Search onChange={props.handleChange}>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
+            <Autocomplete formatDollar={props.formatDollar} />
           </Box>
           <AuthModal />
         </Toolbar>

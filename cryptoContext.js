@@ -26,10 +26,7 @@ const CryptoContext = ({ children }) => {
 
       let unsubscribe = onSnapshot(coinRef, (asset) => {
         if (asset.exists()) {
-          console.log("watchlist: ", asset.data().assets);
           setWatchlist(asset.data().assets);
-        } else {
-          console.log("No items in the watchlist");
         }
       });
       return () => {

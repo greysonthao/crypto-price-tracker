@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -11,6 +12,11 @@ import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import SmallChart from "../components/SmallChart";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import StarIcon from "@mui/icons-material/Star";
+import { CryptoState } from "../cryptoContext";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -44,10 +50,83 @@ export default function CustomizedTables(props) {
       maximumSignificantDigits,
     }).format(number);
 
+  const { user, watchlist, setAlert } = CryptoState();
+
+  const [data, setData] = React.useState(props.data);
+
+  const addToWatchlist = async (coinId, coinName) => {
+    const coinRef = doc(db, "watchlist", user.uid);
+
+    try {
+      await setDoc(
+        coinRef,
+        {
+          assets: watchlist ? [...watchlist, coinId] : [coinId],
+        },
+        { merge: true }
+      );
+
+      setAlert({
+        open: true,
+        message: `${coinName} has been added to the watchlist`,
+        type: "success",
+      });
+    } catch (error) {
+      setAlert({
+        open: true,
+        message: error.message,
+        type: "error",
+      });
+    }
+  };
+
+  const removeFromWatchlist = async (coinId, coinName) => {
+    const coinRef = doc(db, "watchlist", user.uid);
+
+    try {
+      await setDoc(
+        coinRef,
+        {
+          assets: watchlist.filter((watch) => watch !== coinId),
+        },
+        { merge: true }
+      );
+
+      setAlert({
+        open: true,
+        message: `${coinName} has been removed from the watchlist`,
+        type: "success",
+      });
+    } catch (error) {
+      setAlert({
+        open: true,
+        message: error.message,
+        type: "error",
+      });
+    }
+  };
+
   let tableElements = props.data.map((coin) => (
     <StyledTableRow key={coin.id}>
       <StyledTableCell component="th" scope="row">
-        {coin.market_cap_rank}
+        {watchlist.includes(coin?.id) ? (
+          <Box
+            onClick={() => removeFromWatchlist(coin.id, coin.name)}
+            sx={{ cursor: "pointer" }}
+          >
+            <StarIcon fontSize="small" color="primary" />
+          </Box>
+        ) : (
+          <Box
+            onClick={() => addToWatchlist(coin.id, coin.name)}
+            sx={{ cursor: "pointer" }}
+          >
+            <StarBorderIcon fontSize="small" />
+          </Box>
+        )}
+      </StyledTableCell>
+      <StyledTableCell component="th" scope="row">
+        <Box component="span">{coin.market_cap_rank}</Box>
       </StyledTableCell>
       <StyledTableCell component="th" scope="row">
         <Link
@@ -69,7 +148,7 @@ export default function CustomizedTables(props) {
                 fontWeight="bold"
                 sx={{
                   marginLeft: 1,
-                  fontSize: ".9rem",
+                  fontSize: ".85rem",
                 }}
               >
                 {coin.name}
@@ -78,7 +157,7 @@ export default function CustomizedTables(props) {
                   sx={{
                     fontWeight: "normal",
                     marginLeft: ".75rem",
-                    fontSize: ".75rem",
+                    fontSize: ".70rem",
                   }}
                 >
                   {coin.symbol.toUpperCase()}
@@ -122,7 +201,11 @@ export default function CustomizedTables(props) {
           padding: 0,
         }}
       >
-        <SmallChart coin={coin.id} height={50} />
+        <SmallChart
+          coinId={coin.id}
+          height={50}
+          price_change_percentage={coin.price_change_percentage_24h}
+        />
       </StyledTableCell>
     </StyledTableRow>
   ));
@@ -132,6 +215,7 @@ export default function CustomizedTables(props) {
       <Table aria-label="customized table">
         <TableHead>
           <TableRow>
+            <StyledTableCell></StyledTableCell>
             <StyledTableCell>#</StyledTableCell>
             <StyledTableCell align="left">Name</StyledTableCell>
             <StyledTableCell align="right">Price</StyledTableCell>

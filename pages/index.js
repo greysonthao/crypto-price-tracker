@@ -94,7 +94,7 @@ export default function Home() {
       <Navbar handleChange={handleChange} />
       <Container maxWidth="xl">
         {/* <Carousel /> */}
-        <Box marginTop={3}>
+        <Box marginTop="5rem">
           <Typography
             variant="h5"
             component="h1"
@@ -108,7 +108,7 @@ export default function Home() {
             variant="body1"
             component="p"
             color="white"
-            marginBottom={2}
+            marginBottom="2rem"
             textAlign="center"
           >
             The global cryptocurrency market cap today is{" "}

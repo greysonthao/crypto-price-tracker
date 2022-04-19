@@ -3,7 +3,6 @@ import { Box, Typography, Container, Paper, Grid } from "@mui/material";
 import Navbar from "../components/Navbar";
 import DataTable from "../components/Table";
 import React from "react";
-import CircularProgress from "../components/CircularProgress";
 import { CryptoState } from "../cryptoContext";
 
 export default function Watchlist() {
@@ -49,14 +48,14 @@ export default function Watchlist() {
       </Head>
       <Navbar /* handleChange={handleChange} */ />
       <Container maxWidth="xl">
-        <Box marginTop={3}>
+        <Box marginTop="5rem">
           <Typography
             variant="h5"
             component="h1"
             fontWeight="bold"
             textAlign="center"
             color="white"
-            marginBottom="1rem"
+            marginBottom="2rem"
           >
             Watchlist
           </Typography>

@@ -31,13 +31,13 @@ const chartDays = [
 ];
 
 export default function SmallCoinChart(props) {
-  const { coin } = props;
+  const { coinId, price_change_percentage } = props;
   const [historicalData, setHistoricalData] = React.useState([]);
   const [days, setDays] = React.useState(1);
 
   const fetchHistoricalData = async () => {
     const res = await fetch(
-      `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=usd&days=${days}`
+      `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${days}`
     );
 
     const data = await res.json();
@@ -49,10 +49,6 @@ export default function SmallCoinChart(props) {
     fetchHistoricalData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [days]);
-
-  const handleClick = (event, newDays) => {
-    setDays(newDays);
-  };
 
   if (historicalData.length === 0) {
     return (
@@ -80,7 +76,9 @@ export default function SmallCoinChart(props) {
               {
                 data: historicalData.map((coin) => coin[1]),
                 label: `Price (Past ${days} Days) in USD`,
-                borderColor: "black",
+                borderColor: `${
+                  price_change_percentage >= 0 ? "green" : "red"
+                }`,
                 borderWidth: 0.85,
               },
             ],

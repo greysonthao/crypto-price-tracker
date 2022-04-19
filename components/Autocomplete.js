@@ -85,6 +85,14 @@ export default function CryptoAutocomplete() {
             ...params.inputProps,
             autoComplete: "new-password", // disable autocomplete and autofill
           }}
+          sx={{
+            "& label.Mui-focused": {
+              display: "none",
+            },
+            "& legend": {
+              display: "none",
+            },
+          }}
         />
       )}
     />

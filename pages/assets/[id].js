@@ -3,7 +3,7 @@ import Head from "next/head";
 import Navbar from "../../components/Navbar";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import { useRouter } from "next/router";
+//import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Image from "next/image";
 import Card from "@mui/material/Card";
@@ -15,39 +15,21 @@ import { CryptoState } from "../../cryptoContext";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
-export default function Details() {
-  const {
-    query: { id },
-  } = useRouter();
-
-  console.log("id: ", id);
-
-  const [assetId, setAssetId] = React.useState(id);
-
-  const [coinData, setCoinData] = React.useState(null);
+export default function Details({ coinData }) {
+  if (!coinData) {
+    return (
+      <Box>
+        <Navbar />
+        <Box display="flex" justifyContent="center" marginTop="3rem">
+          <CircularProgress />
+        </Box>
+      </Box>
+    );
+  }
 
   const { user, watchlist, setAlert } = CryptoState();
 
   const inWatchlist = watchlist.includes(coinData?.id);
-
-  async function getCoinData() {
-    const res = await fetch(
-      `https://api.coingecko.com/api/v3/coins/${assetId}`
-    );
-
-    const data = await res.json();
-
-    setCoinData(data);
-  }
-
-  React.useEffect(() => {
-    if (id) {
-      getCoinData();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  console.log("coinData: ", coinData);
 
   const formatDollar = (number, maximumSignificantDigits) =>
     new Intl.NumberFormat("en-US", {
@@ -55,17 +37,6 @@ export default function Details() {
       currency: "usd",
       maximumSignificantDigits,
     }).format(number);
-
-  if (!coinData) {
-    return (
-      <div>
-        <Navbar />
-        <Box display="flex" justifyContent="center" marginTop="3rem">
-          <CircularProgress />
-        </Box>
-      </div>
-    );
-  }
 
   const coinDescriptionShortener = () => {
     let coinDescription = coinData.description.en;
@@ -292,6 +263,22 @@ export default function Details() {
   );
 }
 
+export async function getServerSideProps(context) {
+  const id = context.params.id; // Get ID from slug `/book/1`
+
+  const res = await fetch(`https://api.coingecko.com/api/v3/coins/${id}`);
+  const coinData = await res.json();
+
+  if (!coinData) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: { coinData }, // will be passed to the page component as props
+  };
+}
 /* import React from "react";
 import Head from "next/head";
 import Navbar from "../../components/Navbar";

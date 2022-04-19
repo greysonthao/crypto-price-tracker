@@ -2,7 +2,7 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Link from "next/link";
 
 export default function CryptoAutocomplete() {
@@ -29,6 +29,11 @@ export default function CryptoAutocomplete() {
       maximumSignificantDigits,
     }).format(number);
 
+  const filterOptions = createFilterOptions({
+    matchFrom: "any",
+    stringify: (option) => option.name + option.symbol,
+  });
+
   return (
     <Autocomplete
       id="crypto-select"
@@ -41,6 +46,7 @@ export default function CryptoAutocomplete() {
         borderRadius: 3,
       }}
       getOptionLabel={(option) => option.name}
+      filterOptions={filterOptions}
       renderOption={(props, option) => (
         <Link
           href={`/assets/${option.id}`}

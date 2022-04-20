@@ -15,12 +15,12 @@ export default function Watchlist() {
       return;
     }
 
-    fetchWatchlistDada();
+    fetchWatchlistData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [watchlist]);
 
-  const fetchWatchlistDada = async () => {
+  const fetchWatchlistData = async () => {
     let csvString = "";
     for (let i = 0; i < watchlist.length; i++) {
       csvString += String(watchlist[i]);

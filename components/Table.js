@@ -17,6 +17,8 @@ import StarIcon from "@mui/icons-material/Star";
 import { CryptoState } from "../cryptoContext";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import StarAuthModal from "../components/Authentication/StarAuthModal";
+import Router, { useRouter } from "next/router";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -41,6 +43,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function CustomizedTables(props) {
+  const { user, watchlist, setAlert } = CryptoState();
+
+  const [data, setData] = React.useState(props.data);
+
+  const router = useRouter();
+
+  const forceReload = () => {
+    router.reload();
+  };
+
   const formatPercent = (number) => `${new Number(number).toFixed(2)}%`;
 
   const formatDollar = (number, maximumSignificantDigits) =>
@@ -49,10 +61,6 @@ export default function CustomizedTables(props) {
       currency: "usd",
       maximumSignificantDigits,
     }).format(number);
-
-  const { user, watchlist, setAlert } = CryptoState();
-
-  const [data, setData] = React.useState(props.data);
 
   const addToWatchlist = async (coinId, coinName) => {
     const coinRef = doc(db, "watchlist", user.uid);
@@ -108,23 +116,31 @@ export default function CustomizedTables(props) {
 
   let tableElements = props.data.map((coin) => (
     <StyledTableRow key={coin.id}>
-      <StyledTableCell component="th" scope="row">
-        {watchlist.includes(coin?.id) ? (
-          <Box
-            onClick={() => removeFromWatchlist(coin.id, coin.name)}
-            sx={{ cursor: "pointer" }}
-          >
-            <StarIcon fontSize="small" color="primary" />
+      {user ? (
+        <StyledTableCell component="th" scope="row">
+          {watchlist.includes(coin?.id) ? (
+            <Box
+              onClick={() => removeFromWatchlist(coin.id, coin.name)}
+              sx={{ cursor: "pointer" }}
+            >
+              <StarIcon fontSize="small" color="primary" />
+            </Box>
+          ) : (
+            <Box
+              onClick={() => addToWatchlist(coin.id, coin.name)}
+              sx={{ cursor: "pointer" }}
+            >
+              <StarBorderIcon fontSize="small" />
+            </Box>
+          )}
+        </StyledTableCell>
+      ) : (
+        <StyledTableCell component="th" scope="row">
+          <Box sx={{ cursor: "pointer" }}>
+            <StarAuthModal />
           </Box>
-        ) : (
-          <Box
-            onClick={() => addToWatchlist(coin.id, coin.name)}
-            sx={{ cursor: "pointer" }}
-          >
-            <StarBorderIcon fontSize="small" />
-          </Box>
-        )}
-      </StyledTableCell>
+        </StyledTableCell>
+      )}
       <StyledTableCell component="th" scope="row">
         <Box component="span">{coin.market_cap_rank}</Box>
       </StyledTableCell>

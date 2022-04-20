@@ -6,6 +6,7 @@ import Pagination from "../components/Pagination";
 import Carousel from "../components/Carousel";
 import React from "react";
 import CircularProgress from "../components/CircularProgress";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const [data, setData] = React.useState([]);
@@ -14,6 +15,7 @@ export default function Home() {
   const [search, setSearch] = React.useState("");
   const [numPerPage, setNumPerPage] = React.useState(20);
   const [user, setUser] = React.useState(null);
+  const router = useRouter();
 
   const fetchAssets = async () => {
     const response = await fetch(
@@ -32,6 +34,12 @@ export default function Home() {
 
     setMarketCapData(result);
   };
+
+  React.useEffect(() => {
+    if (router.query.page) {
+      setPageNum(parseInt(router.query.page));
+    }
+  }, [router.query.page]);
 
   React.useEffect(() => {
     fetchMarketData();
@@ -71,7 +79,17 @@ export default function Home() {
 
   function handlePageChange(event, value) {
     setPageNum(value);
+    if (value === 1) {
+      router.push(`/`, undefined, { shallow: true });
+    } else {
+      router.push(`?page=${value}`, undefined, { shallow: true });
+    }
   }
+
+  const resetPageNum = () => {
+    setPageNum(1);
+    /* router.reload(); */
+  };
 
   if (data.length === 0 || marketCapData.length === 0) {
     return (
@@ -91,7 +109,7 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar handleChange={handleChange} />
+      <Navbar handleChange={handleChange} resetPageNum={resetPageNum} />
       <Container maxWidth="xl">
         {/* <Carousel /> */}
         <Box marginTop="5rem">

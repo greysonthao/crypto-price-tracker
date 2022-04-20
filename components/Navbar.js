@@ -67,7 +67,12 @@ export default function SearchAppBar(props) {
         >
           <Link href="/">
             <a>
-              <Box display="flex" justifyContent="center" alignItems="center">
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                onClick={props.resetPageNum}
+              >
                 <Image
                   src={logo}
                   alt="Astral Finance Logo"

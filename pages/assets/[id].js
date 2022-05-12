@@ -3,7 +3,6 @@ import Head from "next/head";
 import Navbar from "../../components/Navbar";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-//import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Image from "next/image";
 import Card from "@mui/material/Card";
@@ -14,6 +13,7 @@ import Button from "@mui/material/Button";
 import { CryptoState } from "../../cryptoContext";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import CoinDataBar from "../../components/coinDataBar";
 
 export default function Details({ coinData }) {
   if (!coinData) {
@@ -102,13 +102,15 @@ export default function Details({ coinData }) {
     }
   };
 
+  console.log("coinData: ", coinData);
+
   return (
     <div>
       <Head>
         <title>Astral: {coinData.name} Price</title>
         <meta
           name="description"
-          content="Track the prices of your favorite crypto assets"
+          content={`Track the price of ${coinData.name}.`}
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -116,20 +118,28 @@ export default function Details({ coinData }) {
       <Container maxWidth="xl">
         <Grid container>
           <Grid item xs={12} sm={4}>
-            <Box display="flex" justifyContent="center" marginTop="4.5rem">
+            {/* <Box display="flex" justifyContent="center" marginTop="4.5rem">
               <Image
                 src={coinData.image.large}
                 alt={coinData.name}
-                width={100}
-                height={100}
+                width={50}
+                height={50}
               />
-            </Box>
+            </Box> */}
             <Box
               display="flex"
               alignItems="center"
-              justifyContent="center"
-              marginTop=".5rem"
+              justifyContent="left"
+              marginTop="5rem"
             >
+              <Box display="flex" justifyContent="center" margin="0 1rem 0 0">
+                <Image
+                  src={coinData.image.large}
+                  alt={coinData.name}
+                  width={50}
+                  height={50}
+                />
+              </Box>
               <Typography
                 variant="h4"
                 components="h1"
@@ -153,15 +163,17 @@ export default function Details({ coinData }) {
             <Box
               display="flex"
               alignItems="center"
-              justifyContent="center"
+              justifyContent="left"
               marginTop=".1rem"
             >
-              <Typography
-                variant="h2"
-                fontWeight="bold"
-                components="h3"
-                color="white"
-              >
+              <Box margin="0 1.5rem 0 .5rem">
+                <Typography variant="body2" color="white" textAlign="center">
+                  {coinData.symbol.toUpperCase()}
+                  <br />
+                  Price
+                </Typography>
+              </Box>
+              <Typography variant="h4" components="h3" color="white">
                 {coinData.market_data.current_price.usd > 0.1
                   ? formatDollar(coinData.market_data.current_price.usd)
                   : formatDollar(coinData.market_data.current_price.usd, 7)}
@@ -170,7 +182,6 @@ export default function Details({ coinData }) {
                 variant="h6"
                 components="p"
                 color="white"
-                fontWeight="bold"
                 marginLeft=".75rem"
                 sx={{
                   color: "white",
@@ -258,6 +269,7 @@ export default function Details({ coinData }) {
             <Chart coin={coinData.id} />
           </Grid>
         </Grid>
+        <CoinDataBar coinData={coinData} />
       </Container>
     </div>
   );

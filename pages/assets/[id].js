@@ -14,6 +14,7 @@ import { CryptoState } from "../../cryptoContext";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import CoinDataBar from "../../components/coinDataBar";
+import AssetInfo from "../../components/AssetInfo";
 
 export default function Details({ coinData }) {
   if (!coinData) {
@@ -116,20 +117,12 @@ export default function Details({ coinData }) {
       </Head>
       <Navbar />
       <Container maxWidth="xl">
-        <Grid container>
+        <Grid container spacing={1}>
           <Grid item xs={12} sm={4}>
-            {/* <Box display="flex" justifyContent="center" marginTop="4.5rem">
-              <Image
-                src={coinData.image.large}
-                alt={coinData.name}
-                width={50}
-                height={50}
-              />
-            </Box> */}
             <Box
               display="flex"
               alignItems="center"
-              justifyContent="left"
+              justifyContent="center"
               marginTop="5rem"
             >
               <Box display="flex" justifyContent="center" margin="0 1rem 0 0">
@@ -163,7 +156,7 @@ export default function Details({ coinData }) {
             <Box
               display="flex"
               alignItems="center"
-              justifyContent="left"
+              justifyContent="center"
               marginTop=".1rem"
             >
               <Box margin="0 1.5rem 0 .5rem">
@@ -197,7 +190,7 @@ export default function Details({ coinData }) {
               </Typography>
             </Box>
             <Box>
-              <Typography
+              {/* <Typography
                 variant="h6"
                 components="p"
                 color="white"
@@ -221,7 +214,7 @@ export default function Details({ coinData }) {
                 <Box component="span" fontWeight="normal">
                   {totalMarketCap}
                 </Box>
-              </Typography>
+              </Typography> */}
               <Typography
                 variant="body1"
                 components="p"
@@ -231,7 +224,7 @@ export default function Details({ coinData }) {
               >
                 {coinDescriptionShortener()}
               </Typography>
-              <Typography
+              {/* <Typography
                 variant="body2"
                 components="p"
                 color="white"
@@ -246,7 +239,7 @@ export default function Details({ coinData }) {
                 >
                   {coinData.links.homepage[0]}
                 </a>
-              </Typography>
+              </Typography> */}
               {user && (
                 <Box display="flex" justifyContent="center" marginTop="1.5rem">
                   <Button
@@ -265,11 +258,30 @@ export default function Details({ coinData }) {
               )}
             </Box>
           </Grid>
-          <Grid item xs={12} sm={8} marginTop="4.5rem">
+          <Grid item xs={12} sm={4}></Grid>
+          <Grid item xs={12} sm={4}>
+            <Box
+              display="flex"
+              alignItems="center"
+              flexDirection="column"
+              marginTop="5rem"
+            >
+              <Typography variant="h5" color="white">
+                Information
+              </Typography>
+              <AssetInfo coinData={coinData} />
+            </Box>
+          </Grid>
+          {/* <Grid item xs={12} sm={8} marginTop="4.5rem">
+            <Chart coin={coinData.id} />
+          </Grid> */}
+        </Grid>
+        <CoinDataBar coinData={coinData} />
+        <Grid container spacing={1}>
+          <Grid item xs={12} marginTop="4.5rem">
             <Chart coin={coinData.id} />
           </Grid>
         </Grid>
-        <CoinDataBar coinData={coinData} />
       </Container>
     </div>
   );

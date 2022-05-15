@@ -7,14 +7,24 @@ import Image from "next/image";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import changeIcon from "../images/change.png";
 
-export default function PriceConverter({ coinData }) {
+export default function PriceConverter({ coinData, formatDollar }) {
   const [assetQuantity, setAssetQuantity] = React.useState(1);
   const [assetPrice, setAssetPrice] = React.useState(0);
   const [cryptoOnTop, setCryptoOnTop] = React.useState(true);
 
   React.useEffect(() => {
-    setAssetPrice(coinData.market_data.current_price.usd * assetQuantity);
+    let realAssetPrice = coinData.market_data.current_price.usd * assetQuantity;
+
+    if (realAssetPrice > 0.1) {
+      setAssetPrice(formatDollar(realAssetPrice));
+    } else {
+      setAssetPrice(formatDollar(realAssetPrice, 7));
+    }
   }, [assetQuantity, coinData.market_data.current_price.usd]);
+
+  /*   React.useEffect(() => {
+    setAssetQuantity(assetPrice / coinData.market_data.current_price.usd);
+  }, [assetPrice, coinData.market_data.current_price.usd]); */
 
   const switchConversion = () => {
     setCryptoOnTop((prevState) => !prevState);
@@ -24,18 +34,26 @@ export default function PriceConverter({ coinData }) {
   return (
     <>
       <Box sx={{ width: "85%", margin: "1rem" }}>
-        <Paper sx={{ padding: "1rem 0 1.5rem 1rem" }}>
+        <Paper sx={{ padding: "2rem 0 2.5rem 1rem" }}>
           <Box>
-            {/* <Box sx={{ display: "flex", alignItems: "flex-end" }}> */}
-            <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-              {/* <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} /> */}
-              <Image
-                src={coinData.image.large}
-                alt={coinData.name}
-                width={25}
-                height={25}
-              />
-              <Typography>{coinData.symbol.toUpperCase()}</Typography>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box display="flex" justifyContent="center">
+                <Image
+                  src={coinData.image.large}
+                  alt={coinData.name}
+                  width={25}
+                  height={25}
+                />
+                <Typography sx={{ marginLeft: ".25rem" }}>
+                  {coinData.symbol.toUpperCase()}
+                </Typography>
+              </Box>
               <TextField
                 id="input-with-sx"
                 variant="standard"
@@ -45,17 +63,17 @@ export default function PriceConverter({ coinData }) {
                   setAssetQuantity(e.target.value);
                 }}
                 sx={{
-                  marginLeft: "1rem",
+                  margin: "0 1.5rem 0 0",
                   /* backgroundColor: "#212121", */
                   width: "70%",
                 }}
               />
             </Box>
+
             <Box
               display="flex"
               justifyContent="center"
-              onClick={switchConversion}
-              sx={{ cursor: "pointer" }}
+              margin=".5rem 0 .5rem 0"
             >
               <Image
                 src={changeIcon.src}
@@ -64,16 +82,29 @@ export default function PriceConverter({ coinData }) {
                 height={25}
               />
             </Box>
-            <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-              <MonetizationOnIcon sx={{ marginRight: ".15rem" }} />
-              <Typography>USD</Typography>
+
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Box display="flex" justifyContent="center">
+                <MonetizationOnIcon
+                  fontSize="medium"
+                  sx={{ marginRight: ".15rem" }}
+                />
+                <Typography>USD</Typography>
+              </Box>
               <TextField
                 id="input-with-sx"
                 variant="standard"
-                type="number"
+                /* type="number" */
+
                 value={assetPrice}
                 sx={{
-                  marginLeft: ".8rem",
+                  margin: "0 1.5rem 0 0",
                   /* backgroundColor: "#212121", */
                   width: "70%",
                 }}

@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 export default function AssetInfo({ coinData }) {
-  console.log("coinData: ", coinData.links);
+  console.log("links: ", coinData.links);
   return (
     <Box marginTop="1rem">
       <TableContainer>
@@ -50,7 +50,10 @@ export default function AssetInfo({ coinData }) {
               <TableCell>
                 <a
                   target="_blank"
-                  href={coinData.links.homepage[0]}
+                  href={
+                    coinData.links.facebook_username &&
+                    `https://facebook.com/${coinData.links.facebook_username}`
+                  }
                   rel="noopener noreferrer"
                 >
                   <Button
@@ -62,7 +65,7 @@ export default function AssetInfo({ coinData }) {
                       width: "100%",
                     }}
                   >
-                    Official Website
+                    Facebook
                   </Button>
                 </a>
               </TableCell>
@@ -94,7 +97,9 @@ export default function AssetInfo({ coinData }) {
               <TableCell>
                 <a
                   target="_blank"
-                  href={coinData.links.blockchain_site[0]}
+                  href={
+                    coinData.links.subreddit_url && coinData.links.subreddit_url
+                  }
                   rel="noopener noreferrer"
                 >
                   <Button
@@ -103,9 +108,10 @@ export default function AssetInfo({ coinData }) {
                       textTransform: "none",
                       color: "white",
                       border: "1px white solid",
+                      width: "100%",
                     }}
                   >
-                    Blockchain Explorer
+                    Reddit
                   </Button>
                 </a>
               </TableCell>
@@ -142,8 +148,8 @@ export default function AssetInfo({ coinData }) {
                 <a
                   target="_blank"
                   href={
-                    coinData.links.repos_url.github[0] &&
-                    coinData.links.repos_url.github[0]
+                    coinData.links.twitter_screen_name &&
+                    `https://www.twitter.com/${coinData.links.twitter_screen_name}`
                   }
                   rel="noopener noreferrer"
                 >
@@ -156,7 +162,7 @@ export default function AssetInfo({ coinData }) {
                       width: "100%",
                     }}
                   >
-                    Source Code
+                    Twitter
                   </Button>
                 </a>
               </TableCell>
@@ -171,7 +177,7 @@ export default function AssetInfo({ coinData }) {
                 <a
                   target="_blank"
                   href={
-                    coinData.links.official_forum_url[0] &&
+                    coinData.links.official_forum_url[0].length > 1 &&
                     coinData.links.official_forum_url[0]
                   }
                   rel="noopener noreferrer"
@@ -185,19 +191,14 @@ export default function AssetInfo({ coinData }) {
                       width: "100%",
                     }}
                   >
-                    {coinData.links.official_forum_url[0]
-                      ? "Community Forum"
-                      : "N/A"}
+                    Community Forum
                   </Button>
                 </a>
               </TableCell>
               <TableCell>
                 <a
                   target="_blank"
-                  href={
-                    coinData.links.official_forum_url[0] &&
-                    coinData.links.official_forum_url[0]
-                  }
+                  href={`https://twitter.com/search?q=$${coinData.symbol}`}
                   rel="noopener noreferrer"
                 >
                   <Button
@@ -206,12 +207,9 @@ export default function AssetInfo({ coinData }) {
                       textTransform: "none",
                       color: "white",
                       border: "1px white solid",
-                      width: "100%",
                     }}
                   >
-                    {coinData.links.official_forum_url[0]
-                      ? "Community Forum"
-                      : "N/A"}
+                    Search on Twitter
                   </Button>
                 </a>
               </TableCell>

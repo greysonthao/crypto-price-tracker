@@ -268,9 +268,9 @@ export default function Details({ coinData }) {
               marginTop="5rem"
             >
               <Typography variant="h5" color="white">
-                Price Converter
+                {coinData.symbol.toUpperCase()} to USD Converter
               </Typography>
-              <PriceConverter coinData={coinData} />
+              <PriceConverter coinData={coinData} formatDollar={formatDollar} />
             </Box>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -296,7 +296,7 @@ export default function Details({ coinData }) {
             <Typography variant="h5" color="white">
               {coinData.symbol.toUpperCase()} Price Statistics
             </Typography>
-            <PriceStats />
+            <PriceStats coinData={coinData} formatDollar={formatDollar} />
           </Grid>
         </Grid>
       </Container>

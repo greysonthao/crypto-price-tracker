@@ -15,6 +15,8 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import CoinDataBar from "../../components/coinDataBar";
 import AssetInfo from "../../components/AssetInfo";
+import PriceConverter from "../../components/PriceConverter";
+import PriceStats from "../../components/PriceStats";
 
 export default function Details({ coinData }) {
   if (!coinData) {
@@ -258,7 +260,19 @@ export default function Details({ coinData }) {
               )}
             </Box>
           </Grid>
-          <Grid item xs={12} sm={4}></Grid>
+          <Grid item xs={12} sm={4}>
+            <Box
+              display="flex"
+              alignItems="center"
+              flexDirection="column"
+              marginTop="5rem"
+            >
+              <Typography variant="h5" color="white">
+                Price Converter
+              </Typography>
+              <PriceConverter coinData={coinData} />
+            </Box>
+          </Grid>
           <Grid item xs={12} sm={4}>
             <Box
               display="flex"
@@ -272,14 +286,17 @@ export default function Details({ coinData }) {
               <AssetInfo coinData={coinData} />
             </Box>
           </Grid>
-          {/* <Grid item xs={12} sm={8} marginTop="4.5rem">
-            <Chart coin={coinData.id} />
-          </Grid> */}
         </Grid>
         <CoinDataBar coinData={coinData} />
         <Grid container spacing={1}>
-          <Grid item xs={12} marginTop="4.5rem">
+          <Grid item xs={12} sm={8} marginTop="4.5rem">
             <Chart coin={coinData.id} />
+          </Grid>
+          <Grid item xs={12} sm={4} marginTop="4.5rem">
+            <Typography variant="h5" color="white">
+              {coinData.symbol.toUpperCase()} Price Statistics
+            </Typography>
+            <PriceStats />
           </Grid>
         </Grid>
       </Container>

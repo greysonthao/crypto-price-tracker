@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Image from "next/image";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
-import changeIcon from "../images/change.png";
+import changeIcon from "../images/change-white.png";
 
 export default function PriceConverter({ coinData, formatDollar }) {
   const [assetQuantity, setAssetQuantity] = React.useState(1);
@@ -20,7 +20,7 @@ export default function PriceConverter({ coinData, formatDollar }) {
     } else {
       setAssetPrice(formatDollar(realAssetPrice, 7));
     }
-  }, [assetQuantity, coinData.market_data.current_price.usd]);
+  }, [assetQuantity, coinData.market_data.current_price.usd, formatDollar]);
 
   /*   React.useEffect(() => {
     setAssetQuantity(assetPrice / coinData.market_data.current_price.usd);
@@ -34,7 +34,13 @@ export default function PriceConverter({ coinData, formatDollar }) {
   return (
     <>
       <Box sx={{ width: "85%", margin: "1rem" }}>
-        <Paper sx={{ padding: "2rem 0 2.5rem 1rem" }}>
+        <Paper
+          sx={{
+            padding: "2rem 0 2.5rem 1rem",
+            backgroundColor: "black",
+            borderRadius: "10px",
+          }}
+        >
           <Box>
             <Box
               sx={{
@@ -50,7 +56,7 @@ export default function PriceConverter({ coinData, formatDollar }) {
                   width={25}
                   height={25}
                 />
-                <Typography sx={{ marginLeft: ".25rem" }}>
+                <Typography color="white" sx={{ marginLeft: ".25rem" }}>
                   {coinData.symbol.toUpperCase()}
                 </Typography>
               </Box>
@@ -64,8 +70,9 @@ export default function PriceConverter({ coinData, formatDollar }) {
                 }}
                 sx={{
                   margin: "0 1.5rem 0 0",
-                  /* backgroundColor: "#212121", */
+                  backgroundColor: "#212121",
                   width: "70%",
+                  input: { color: "white", marginLeft: ".5rem" },
                 }}
               />
             </Box>
@@ -93,20 +100,20 @@ export default function PriceConverter({ coinData, formatDollar }) {
               <Box display="flex" justifyContent="center">
                 <MonetizationOnIcon
                   fontSize="medium"
-                  sx={{ marginRight: ".15rem" }}
+                  sx={{ marginRight: ".15rem", color: "white" }}
                 />
-                <Typography>USD</Typography>
+                <Typography color="white">USD</Typography>
               </Box>
               <TextField
                 id="input-with-sx"
                 variant="standard"
                 /* type="number" */
-
                 value={assetPrice}
                 sx={{
                   margin: "0 1.5rem 0 0",
-                  /* backgroundColor: "#212121", */
+                  backgroundColor: "#212121",
                   width: "70%",
+                  input: { color: "white", marginLeft: ".5rem" },
                 }}
               />
             </Box>

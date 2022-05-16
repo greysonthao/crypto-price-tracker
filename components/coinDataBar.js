@@ -15,7 +15,7 @@ export default function coinDataBar({ coinData }) {
             sx={{
               backgroundColor: "black",
               borderTopLeftRadius: "5px",
-              borderBottomLeftRadius: "5px",
+              borderTopRightRadius: "5px",
               padding: ".5rem",
             }}
           >
@@ -65,8 +65,6 @@ export default function coinDataBar({ coinData }) {
             square={true}
             sx={{
               backgroundColor: "black",
-              borderTopRightRadius: "5px",
-              borderBottomRightRadius: "5px",
               padding: ".5rem",
             }}
           >
@@ -93,8 +91,6 @@ export default function coinDataBar({ coinData }) {
             square={true}
             sx={{
               backgroundColor: "black",
-              borderTopLeftRadius: "5px",
-              borderBottomLeftRadius: "5px",
               padding: ".5rem",
             }}
           >
@@ -148,7 +144,7 @@ export default function coinDataBar({ coinData }) {
             square={true}
             sx={{
               backgroundColor: "black",
-              borderTopRightRadius: "5px",
+              borderBottomLeftRadius: "5px",
               borderBottomRightRadius: "5px",
               padding: ".5rem",
             }}

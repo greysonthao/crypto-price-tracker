@@ -17,7 +17,7 @@ export default function PriceStats({ coinData, formatDollar }) {
     day: "numeric",
   };
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ margin: "1rem 0 0 0" }}>
       <Table sx={{ width: "100%" }} aria-label="simple table">
         <TableBody>
           <TableRow sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>

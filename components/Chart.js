@@ -71,7 +71,7 @@ export default function CoinChart(props) {
   }
 
   return (
-    <Box marginLeft="1.5rem" marginBottom="7rem" marginRight="1.5rem">
+    <Box marginLeft="1.5rem" marginBottom="1rem" marginRight="1.5rem">
       <Box>
         <Line
           data={{

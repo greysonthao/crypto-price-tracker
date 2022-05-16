@@ -28,7 +28,6 @@ export default function PriceConverter({ coinData, formatDollar }) {
 
   const switchConversion = () => {
     setCryptoOnTop((prevState) => !prevState);
-    console.log("cryptoOnTop: ", cryptoOnTop);
   };
 
   return (

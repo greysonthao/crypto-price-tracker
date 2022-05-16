@@ -8,7 +8,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 export default function AssetInfo({ coinData }) {
-  console.log("links: ", coinData.links);
   return (
     <Box marginTop="1rem">
       <TableContainer>
@@ -43,7 +42,7 @@ export default function AssetInfo({ coinData }) {
                       width: "100%",
                     }}
                   >
-                    Official Website
+                    Website
                   </Button>
                 </a>
               </TableCell>
@@ -51,8 +50,9 @@ export default function AssetInfo({ coinData }) {
                 <a
                   target="_blank"
                   href={
-                    coinData.links.facebook_username &&
-                    `https://facebook.com/${coinData.links.facebook_username}`
+                    coinData.links.facebook_username
+                      ? `https://facebook.com/${coinData.links.facebook_username}`
+                      : undefined
                   }
                   rel="noopener noreferrer"
                 >
@@ -98,7 +98,9 @@ export default function AssetInfo({ coinData }) {
                 <a
                   target="_blank"
                   href={
-                    coinData.links.subreddit_url && coinData.links.subreddit_url
+                    coinData.links.subreddit_url
+                      ? coinData.links.subreddit_url
+                      : undefined
                   }
                   rel="noopener noreferrer"
                 >
@@ -126,8 +128,9 @@ export default function AssetInfo({ coinData }) {
                 <a
                   target="_blank"
                   href={
-                    coinData.links.repos_url.github[0] &&
                     coinData.links.repos_url.github[0]
+                      ? coinData.links.repos_url.github[0]
+                      : undefined
                   }
                   rel="noopener noreferrer"
                 >
@@ -148,8 +151,9 @@ export default function AssetInfo({ coinData }) {
                 <a
                   target="_blank"
                   href={
-                    coinData.links.twitter_screen_name &&
-                    `https://www.twitter.com/${coinData.links.twitter_screen_name}`
+                    coinData.links.twitter_screen_name
+                      ? `https://www.twitter.com/${coinData.links.twitter_screen_name}`
+                      : undefined
                   }
                   rel="noopener noreferrer"
                 >
@@ -177,8 +181,9 @@ export default function AssetInfo({ coinData }) {
                 <a
                   target="_blank"
                   href={
-                    coinData.links.official_forum_url[0].length > 1 &&
-                    coinData.links.official_forum_url[0]
+                    coinData.links.official_forum_url[0].length > 1
+                      ? coinData.links.official_forum_url[0]
+                      : undefined
                   }
                   rel="noopener noreferrer"
                 >

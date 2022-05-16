@@ -8,14 +8,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 export default function PriceStats({ coinData, formatDollar }) {
-  console.log("coin Data: ", coinData.market_data);
-
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  };
   return (
     <TableContainer component={Paper} sx={{ margin: "1rem 0 0 0" }}>
       <Table sx={{ width: "100%" }} aria-label="simple table">

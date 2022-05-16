@@ -17,6 +17,7 @@ import CoinDataBar from "../../components/coinDataBar";
 import AssetInfo from "../../components/AssetInfo";
 import PriceConverter from "../../components/PriceConverter";
 import PriceStats from "../../components/PriceStats";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function Details({ coinData }) {
   if (!coinData) {
@@ -105,7 +106,8 @@ export default function Details({ coinData }) {
     }
   };
 
-  console.log("coinData: ", coinData);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const matches = useMediaQuery("(max-width:480px)");
 
   return (
     <div>
@@ -118,7 +120,7 @@ export default function Details({ coinData }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" sx={{ marginBottom: "10rem" }}>
         <Grid container spacing={1}>
           <Grid item xs={12} sm={4}>
             <Box
@@ -292,7 +294,7 @@ export default function Details({ coinData }) {
           <Grid item xs={12} sm={8} marginTop="4.5rem">
             <Chart coin={coinData.id} />
           </Grid>
-          <Grid item xs={12} sm={4} marginTop="4.5rem">
+          <Grid item xs={12} sm={4} marginTop={matches ? "1rem" : "4.5rem"}>
             <Typography variant="h5" color="white">
               {coinData.symbol.toUpperCase()} Price Statistics
             </Typography>

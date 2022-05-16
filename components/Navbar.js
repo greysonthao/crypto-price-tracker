@@ -6,7 +6,6 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
-import SearchIcon from "@mui/icons-material/Search";
 import logo from "../public/Astral-logo-2.png";
 import Image from "next/image";
 import AuthModal from "./Authentication/AuthModal";

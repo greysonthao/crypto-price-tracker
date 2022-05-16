@@ -6,19 +6,19 @@ import React from "react";
 import { CryptoState } from "../cryptoContext";
 
 export default function Watchlist() {
-  const { watchlist } = CryptoState();
+  const { watchlist, user } = CryptoState();
 
   const [watchlistData, setWatchlistData] = React.useState([]);
 
   React.useEffect(() => {
-    if (watchlist.length === 0) {
-      return;
+    if (watchlist.length === 0 || !user) {
+      return setWatchlistData([]);
     }
 
     fetchWatchlistData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watchlist]);
+  }, [watchlist, user]);
 
   const fetchWatchlistData = async () => {
     let csvString = "";
@@ -35,6 +35,8 @@ export default function Watchlist() {
 
     setWatchlistData(result);
   };
+
+  console.log("Watchlist Data: ", watchlistData);
 
   return (
     <div>

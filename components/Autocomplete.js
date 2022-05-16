@@ -4,6 +4,8 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Link from "next/link";
+import SearchIcon from "@mui/icons-material/Search";
+import InputAdornment from "@mui/material/InputAdornment";
 
 export default function CryptoAutocomplete() {
   const [assets, setAssets] = React.useState([]);
@@ -43,7 +45,7 @@ export default function CryptoAutocomplete() {
         width: 275,
         height: 40,
         backgroundColor: "white",
-        borderRadius: 3,
+        borderRadius: "5px",
       }}
       getOptionLabel={(option) => option.name}
       filterOptions={filterOptions}
@@ -97,6 +99,10 @@ export default function CryptoAutocomplete() {
             },
             "& legend": {
               display: "none",
+            },
+            "& label": {
+              margin: "0 0 .5rem 0",
+              width: 100,
             },
           }}
         />

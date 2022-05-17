@@ -6,6 +6,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import SearchIcon from "@mui/icons-material/Search";
+import Typography from "@mui/material/Typography";
 
 export default function AssetInfo({ coinData }) {
   return (
@@ -22,11 +24,6 @@ export default function AssetInfo({ coinData }) {
         >
           <TableBody>
             <TableRow>
-              {/* <TableCell>
-                <Typography variant="caption" fontWeight="bold" color="white">
-                  Website
-                </Typography>
-              </TableCell> */}
               <TableCell>
                 <a
                   target="_blank"
@@ -172,11 +169,6 @@ export default function AssetInfo({ coinData }) {
               </TableCell>
             </TableRow>
             <TableRow>
-              {/* <TableCell>
-                <Typography variant="caption" fontWeight="bold" color="white">
-                  Community
-                </Typography>
-              </TableCell> */}
               <TableCell>
                 <a
                   target="_blank"
@@ -214,7 +206,11 @@ export default function AssetInfo({ coinData }) {
                       border: "1px white solid",
                     }}
                   >
-                    Search on Twitter
+                    <SearchIcon
+                      fontSize="small"
+                      sx={{ color: "white", marginRight: ".25rem" }}
+                    />
+                    on Twitter
                   </Button>
                 </a>
               </TableCell>

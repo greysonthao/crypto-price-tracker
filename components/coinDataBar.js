@@ -127,7 +127,7 @@ export default function coinDataBar({ coinData }) {
               textAlign="center"
               color="white"
             >
-              Circulating Supply
+              CIRCULATING SUPPLY
             </Typography>
             <Typography
               variant="body1"
@@ -155,7 +155,7 @@ export default function coinDataBar({ coinData }) {
               textAlign="center"
               color="white"
             >
-              Total Supply
+              TOTAL SUPPLY
             </Typography>
             <Typography
               variant="body1"

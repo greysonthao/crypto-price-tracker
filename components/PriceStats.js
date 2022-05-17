@@ -8,6 +8,12 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 export default function PriceStats({ coinData, formatDollar }) {
+  const dateConverter = (dateVar) => {
+    let date_real = new Date(dateVar);
+    date_real = date_real.toLocaleDateString();
+    return date_real;
+  };
+
   return (
     <TableContainer component={Paper} sx={{ margin: "1rem 0 0 0" }}>
       <Table sx={{ width: "100%" }} aria-label="simple table">
@@ -80,8 +86,8 @@ export default function PriceStats({ coinData, formatDollar }) {
                   ? formatDollar(coinData.market_data.ath.usd)
                   : formatDollar(coinData.market_data.ath.usd, 7)}
               </Typography>
-              <Typography variant="body2" component="span" margin="0 0 0 1rem">
-                {coinData.market_data.ath_date.usd}
+              <Typography variant="caption" margin="0 0 0 .25rem">
+                on {dateConverter(coinData.market_data.ath_date.usd)}
               </Typography>
             </TableCell>
           </TableRow>
@@ -95,8 +101,9 @@ export default function PriceStats({ coinData, formatDollar }) {
                   ? formatDollar(coinData.market_data.atl.usd)
                   : formatDollar(coinData.market_data.atl.usd, 7)}
               </Typography>
-              <Typography variant="body2" component="span" margin="0 0 0 1rem">
-                {coinData.market_data.atl_date.usd}
+
+              <Typography variant="caption" margin="0 0 0 .25rem">
+                on {dateConverter(coinData.market_data.atl_date.usd)}
               </Typography>
             </TableCell>
           </TableRow>
